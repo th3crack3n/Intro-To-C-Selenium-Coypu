@@ -112,10 +112,11 @@ namespace IntroToSeleniumInCSharp
         {
             browser.Visit("http://www.npr.org");
 
-            // open 'programs & podcasts' menu
-            clickOption(NPROptionToClass(OptionsNPR.ProgramsAndPodcasts));
-            verifyMenuOpen(OptionsNPR.ProgramsAndPodcasts);
-            clickOption(NPROptionToClass(OptionsNPR.ProgramsAndPodcasts));
+            // open a specific menu
+            var place = OptionsNPR.ProgramsAndPodcasts;
+            clickOption(NPROptionToClass(place));
+            verifyMenuOpen(place);
+            clickOption(NPROptionToClass(place));
 
             // get 'news & conversations' elements from 'programs & podcasts' menu 
             var data = getNewsAndConversationsNPR();
