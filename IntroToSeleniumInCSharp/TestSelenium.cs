@@ -5,6 +5,7 @@ using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace IntroToSeleniumInCSharp
 {
@@ -104,7 +105,7 @@ namespace IntroToSeleniumInCSharp
             clickOption(NPROptionToClass(OptionsNPR.ProgramsAndPodcasts));
 
             // click specific 'news & conversations' element from 'programs & podcasts' menu
-            clickByTextNC(data, "all things considered");
+            clickByTextNC("All Things Considered");
             Assert.AreEqual(getURIByText(data, "all things considered"), browser.Location.AbsoluteUri);
         }
 
@@ -169,7 +170,7 @@ namespace IntroToSeleniumInCSharp
         {
             List<NPRData> data = new List<NPRData>();
 
-            clickOption(".programs-podcasts");
+            clickOption(NPROptionToClass(OptionsNPR.ProgramsAndPodcasts));
             var result = browser.FindCss(".group", Options.First).FindAllCss("li").ToList();
 
             foreach (SnapshotElementScope scope in result)
@@ -197,9 +198,10 @@ namespace IntroToSeleniumInCSharp
         /// </summary>
         /// <param name="data">A List of NPRData objects</param>
         /// <param name="text">A string reperesentation of a heading</param>
-        public static void clickByTextNC(List<NPRData> data, string text)
+        public static void clickByTextNC(string text)
         {
-            browser.Visit(getURIByText(data, text));
+            clickOption(NPROptionToClass(OptionsNPR.ProgramsAndPodcasts));
+            browser.FindLink(text).Click();
         }
 
         /// <summary>
