@@ -37,6 +37,9 @@ namespace IntroToSeleniumInCSharp
             browser.MaximiseWindow();
         }
 
+        /// <summary>
+        /// A test on the xpanxion.com website, specifically to check user input on the name and email fields of the contact page
+        /// </summary>
         [Test]
         public static void testXpanxionForm()
         {
@@ -46,7 +49,7 @@ namespace IntroToSeleniumInCSharp
             browser.FillIn(xpanxionNameField).With("Sean McCracken");
             browser.FillIn(xpanxionEmailField).With("smccracken@xpanxion.com");
             verifyUserData(true);
-
+        
             // Delete user info & verify
             browser.FillIn(xpanxionNameField).With("");
             browser.FillIn(xpanxionEmailField).With("");
@@ -89,6 +92,21 @@ namespace IntroToSeleniumInCSharp
             return browser.FindField(xpanxionEmailField).Value;
         }
 
+
+        /// <summary>
+        /// Three tests on the npr.org website:
+        ///     <list type="bullet">
+        ///         <item>
+        ///             <description>Click "Programs & Podcasts" and verify menu opens</description>
+        ///         </item>
+        ///         <item>
+        ///             <description>Get a list of Objects that store each element and link in the "News & Conversations" column</description>
+        ///         </item>
+        ///         item>
+        ///             <description>Click the link in the "News & Conversations" column with the given text</description>
+        ///         </item>
+        ///     </list>
+        /// </summary>
         [Test]
         public static void testNPRdata()
         {
