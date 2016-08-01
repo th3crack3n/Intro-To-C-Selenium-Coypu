@@ -69,24 +69,43 @@ namespace IntroToSeleniumInCSharp
             return browser.FindCss(option, Options.First);
         }
 
-        public List<NPRData> getNewsAndConversationsNPR()
+        public class Data
         {
-            List<NPRData> data = new List<NPRData>();
+            IWebElement element;
+            public string href { get; set; }
+            public string text { get; set; }
+
+            public Data(IWebElement element)
+            {
+                this.element = element;
+                href = element.FindElement(By.CssSelector("a")).GetAttribute("href");
+                text = element.Text;
+            }
+
+            public string toString()
+            {
+                return (text + "\n" + "  ---> " + href);
+            }
+        }
+
+        public List<Data> getNewsAndConversationsNPR()
+        {
+            List<Data> data = new List<Data>();
 
             clickOption(OptionToClassName(OptionsNPR.ProgramsAndPodcasts));
             var result = findOption(".group").FindAllCss("li").ToList();
 
             foreach (SnapshotElementScope scope in result)
             {
-                data.Add(new NPRData((IWebElement)scope.Native));
+                data.Add(new Data((IWebElement)scope.Native));
             }
 
             return data;
         }
 
-        public void outputNewsAndConversationsNPR(List<NPRData> data)
+        public void outputNewsAndConversationsNPR(List<Data> data)
         {
-            foreach (NPRData d in data)
+            foreach (Data d in data)
             {
                 Console.WriteLine(d.toString());
             }
@@ -98,9 +117,9 @@ namespace IntroToSeleniumInCSharp
             browser.FindLink(text).Click();
         }
 
-        public string getURIByText(List<NPRData> list, string text)
+        public string getURIByText(List<Data> list, string text)
         {
-            foreach (NPRData d in list)
+            foreach (Data d in list)
             {
                 if (d.text == text.ToLower())
                 {
