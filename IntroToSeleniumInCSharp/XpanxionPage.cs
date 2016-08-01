@@ -23,7 +23,6 @@ namespace IntroToSeleniumInCSharp
         public XpanxionPage(BrowserSession browser)
         {
             this.browser = browser;
-            browser.MaximiseWindow();
         }
 
         public void load()
