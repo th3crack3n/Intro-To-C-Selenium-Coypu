@@ -22,10 +22,6 @@ namespace IntroToSeleniumInCSharp
             Topics,
             ProgramsAndPodcasts
         }
-
-        static readonly string xpanxionNameField = "widgetu1680_input";
-        static readonly string xpanxionEmailField = "widgetu1684_input";
-
         [TestFixtureSetUp]
         public void init()
         {
@@ -43,55 +39,18 @@ namespace IntroToSeleniumInCSharp
         [Test]
         public static void testXpanxionForm()
         {
-            browser.Visit("http://xpanxion.com/contact.html");
+            XpanxionPage xpx = new XpanxionPage(browser);
+            xpx.load();
 
             // Add user info & verify
-            browser.FillIn(xpanxionNameField).With("Sean McCracken");
-            browser.FillIn(xpanxionEmailField).With("smccracken@xpanxion.com");
-            verifyUserData(true);
-        
-            // Delete user info & verify
-            browser.FillIn(xpanxionNameField).With("");
-            browser.FillIn(xpanxionEmailField).With("");
-            verifyUserData(false);
-        }
+            xpx.fillName("Sean McCracken");
+            xpx.fillEmail("smccracken@xpanxion.com");
+            xpx.verifyDataPresent(true);
 
-        /// <summary>
-        /// Verifies the name and email fields contents, either empty or not
-        /// </summary>
-        /// <param name="dataPresent">Whether data should be present</param>
-        private static void verifyUserData(bool dataPresent)
-        {
-            // true if desiring data, false otherwise
-            if (dataPresent == true)
-            {
-                Assert.IsNotEmpty(getNameValue());
-                Assert.IsNotEmpty(getEmailValue()); 
-            } else
-            {
-                Assert.IsEmpty(getNameValue());
-                Assert.IsEmpty(getEmailValue());
-            }
+            // Delete user info & verify  
+            xpx.emptyFields();
+            xpx.verifyDataPresent(false);
         }
-
-        /// <summary>
-        /// Gets the text value of the name field
-        /// </summary>
-        /// <returns>String value of name field</returns>
-        private static string getNameValue()
-        {
-            return browser.FindField(xpanxionNameField).Value;
-        }
-
-        /// <summary>
-        /// Gets the text value of the email field
-        /// </summary>
-        /// <returns>String value of the email field</returns>
-        private static string getEmailValue()
-        {
-            return browser.FindField(xpanxionEmailField).Value;
-        }
-
 
         /// <summary>
         /// Three tests on the npr.org website:
@@ -115,7 +74,7 @@ namespace IntroToSeleniumInCSharp
             // open a specific menu
             var place = OptionsNPR.ProgramsAndPodcasts;
             clickOption(NPROptionToClass(place));
-            verifyMenuOpen(place);
+            verifyMenuOpen();
             clickOption(NPROptionToClass(place));
 
             // get 'news & conversations' elements from 'programs & podcasts' menu 
@@ -166,8 +125,7 @@ namespace IntroToSeleniumInCSharp
         /// <summary>
         /// Verifies that the menu option provided by an enum value from OptionsNPR is open (chosen) 
         /// </summary>
-        /// <param name="option">A css class name</param>
-        private static void verifyMenuOpen(OptionsNPR option)
+        private static void verifyMenuOpen()
         {
             Assert.That(findOption(".ecosystem-news"), Shows.Css(" .chosen"));
         }
@@ -191,7 +149,7 @@ namespace IntroToSeleniumInCSharp
             List<NPRData> data = new List<NPRData>();
 
             clickOption(NPROptionToClass(OptionsNPR.ProgramsAndPodcasts));
-            var result = browser.FindCss(".group", Options.First).FindAllCss("li").ToList();
+            var result = findOption(".group").FindAllCss("li").ToList();
 
             foreach (SnapshotElementScope scope in result)
             {
