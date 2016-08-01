@@ -124,8 +124,9 @@ namespace IntroToSeleniumInCSharp
             clickOption(NPROptionToClass(OptionsNPR.ProgramsAndPodcasts));
 
             // click specific 'news & conversations' element from 'programs & podcasts' menu
-            clickByTextNC("All Things Considered");
-            Assert.AreEqual(getURIByText(data, "all things considered"), browser.Location.AbsoluteUri);
+            var text = "All Things Considered";
+            clickByTextNC(text);
+            Assert.AreEqual(getURIByText(data, text), browser.Location.AbsoluteUri);
         }
 
         /// <summary>
@@ -233,7 +234,7 @@ namespace IntroToSeleniumInCSharp
         {
             foreach (NPRData d in list)
             {
-                if (d.text == text)
+                if (d.text == text.ToLower())
                 {
                     return d.href;
                 }
