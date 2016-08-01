@@ -34,7 +34,6 @@ namespace IntroToSeleniumInCSharp
         public static void testXpanxionForm()
         {
             XpanxionPage xpx = new XpanxionPage(browser);
-            xpx.load();
 
             // Add user info & verify
             xpx.fillName("Sean McCracken");
@@ -64,7 +63,6 @@ namespace IntroToSeleniumInCSharp
         public static void testNPRdata()
         {
             NPRPage npr = new NPRPage(browser);
-            npr.load();
 
             // open a specific menu
             var classOption = npr.OptionToClassName(NPRPage.OptionsNPR.ProgramsAndPodcasts);

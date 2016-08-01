@@ -27,13 +27,9 @@ namespace IntroToSeleniumInCSharp
         public NPRPage(BrowserSession browser)
         {
             this.browser = browser;
+            this.browser.Visit(home);
         }
-
-        public void load()
-        {
-            browser.Visit(home);
-        }
-
+        
         public string OptionToClassName(OptionsNPR option)
         {
             string selected = null;

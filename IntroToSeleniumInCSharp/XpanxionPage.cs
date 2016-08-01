@@ -23,11 +23,7 @@ namespace IntroToSeleniumInCSharp
         public XpanxionPage(BrowserSession browser)
         {
             this.browser = browser;
-        }
-
-        public void load()
-        {
-            browser.Visit(home + post);
+            this.browser.Visit(home + post);
         }
 
         public void fillName(string name = "")
