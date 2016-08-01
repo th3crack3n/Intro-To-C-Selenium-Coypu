@@ -16,12 +16,6 @@ namespace IntroToSeleniumInCSharp
 
         static BrowserSession browser;
 
-        enum OptionsNPR
-        {
-            Music,
-            Topics,
-            ProgramsAndPodcasts
-        }
         [TestFixtureSetUp]
         public void init()
         {
@@ -69,136 +63,24 @@ namespace IntroToSeleniumInCSharp
         [Test]
         public static void testNPRdata()
         {
-            browser.Visit("http://www.npr.org");
+            NPRPage npr = new NPRPage(browser);
+            npr.load();
 
             // open a specific menu
-            var place = OptionsNPR.ProgramsAndPodcasts;
-            clickOption(NPROptionToClass(place));
-            verifyMenuOpen();
-            clickOption(NPROptionToClass(place));
+            var classOption = npr.OptionToClassName(NPRPage.OptionsNPR.ProgramsAndPodcasts);
+            npr.clickOption(classOption); // open menu
+            npr.verifyMenuOpen();
+            npr.clickOption(classOption); // close menu
 
             // get 'news & conversations' elements from 'programs & podcasts' menu 
-            var data = getNewsAndConversationsNPR();
-            outputNewsAndConversationsNPR(data);
-            clickOption(NPROptionToClass(OptionsNPR.ProgramsAndPodcasts));
+            var data = npr.getNewsAndConversationsNPR();
+            npr.outputNewsAndConversationsNPR(data);
+            npr.clickOption(classOption); // close menu
 
             // click specific 'news & conversations' element from 'programs & podcasts' menu
             var text = "All Things Considered";
-            clickByTextNC(text);
-            Assert.AreEqual(getURIByText(data, text), browser.Location.AbsoluteUri);
-        }
-
-        /// <summary>
-        /// Returns a string containing a css class, given an enum value from OptionsNPR
-        /// </summary>
-        /// <param name="option">A value from the OptionNPR enum</param>
-        /// <returns>String value of a css class</returns>
-        private static string NPROptionToClass(OptionsNPR option)
-        {
-            string selected = null;
-
-            switch (option)
-            {
-                case OptionsNPR.Music:
-                    selected = ".music";
-                    break;
-                case OptionsNPR.Topics:
-                    selected = ".topics";
-                    break;
-                case OptionsNPR.ProgramsAndPodcasts:
-                    selected = ".programs-podcasts";
-                    break;
-            }
-
-            return selected;
-        }
-
-        /// <summary>
-        /// Clicks an element found by providing a css class to the findOption() method
-        /// </summary>
-        /// <param name="option">A css class name</param>
-        private static void clickOption(string option)
-        {
-            findOption(option).Click();
-        }
-
-        /// <summary>
-        /// Verifies that the menu option provided by an enum value from OptionsNPR is open (chosen) 
-        /// </summary>
-        private static void verifyMenuOpen()
-        {
-            Assert.That(findOption(".ecosystem-news"), Shows.Css(" .chosen"));
-        }
-
-        /// <summary>
-        /// Returns an ElementScope object with the first occurance of a given css class
-        /// </summary>
-        /// <param name="option">A css class name</param>
-        /// <returns>An ElementScope object referencing a specific element</returns>
-        private static ElementScope findOption(string option)
-        {
-            return browser.FindCss(option, Options.First);
-        }
-
-        /// <summary>
-        /// Gathers data from the "News & Conversations" section of the "Programs & Podcasts" menu, and returns a list of NPRData objects referecing the element data
-        /// </summary>
-        /// <returns>A List of NPRData objects</returns>
-        private static List<NPRData> getNewsAndConversationsNPR()
-        {
-            List<NPRData> data = new List<NPRData>();
-
-            clickOption(NPROptionToClass(OptionsNPR.ProgramsAndPodcasts));
-            var result = findOption(".group").FindAllCss("li").ToList();
-
-            foreach (SnapshotElementScope scope in result)
-            {
-                data.Add(new NPRData((IWebElement)scope.Native));
-            }
-        
-            return data;
-        }
-
-        /// <summary>
-        /// Prints the values in a List of NPRData objects to console
-        /// </summary>
-        /// <param name="data">A List of NPRData objects</param>
-        private static void outputNewsAndConversationsNPR(List<NPRData> data)
-        {
-            foreach (NPRData d in data)
-            {
-                Console.WriteLine(d.toString());
-            }
-        }
-
-        /// <summary>
-        /// Clicks a link in the NPRData List given a text value of one of the elements
-        /// </summary>
-        /// <param name="data">A List of NPRData objects</param>
-        /// <param name="text">A string reperesentation of a heading</param>
-        public static void clickByTextNC(string text)
-        {
-            clickOption(NPROptionToClass(OptionsNPR.ProgramsAndPodcasts));
-            browser.FindLink(text).Click();
-        }
-
-        /// <summary>
-        /// Gets the URI of a NPRData object that matches the given text
-        /// </summary>
-        /// <param name="list">A List of NPRData objects</param>
-        /// <param name="text">String value to match for heading text</param>
-        /// <returns></returns>
-        private static string getURIByText(List<NPRData> list, string text)
-        {
-            foreach (NPRData d in list)
-            {
-                if (d.text == text.ToLower())
-                {
-                    return d.href;
-                }
-            }
-
-            return null;
+            npr.clickByTextNC(text);
+            Assert.AreEqual(npr.getURIByText(data, text), browser.Location.AbsoluteUri);
         }
 
         [TestFixtureTearDown]
