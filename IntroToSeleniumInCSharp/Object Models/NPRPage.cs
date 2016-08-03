@@ -15,7 +15,7 @@ namespace IntroToSeleniumInCSharp
     {
         private BrowserSession browser;
 
-        public enum OptionsNPR
+        public enum MenuOptions
         {
             Music,
             Topics,
@@ -35,19 +35,19 @@ namespace IntroToSeleniumInCSharp
             browser.Visit(home);
         }
         
-        public string OptionToClassName(OptionsNPR option)
+        public string OptionToClassName(MenuOptions option)
         {
             string selected = null;
 
             switch (option)
             {
-                case OptionsNPR.Music:
+                case MenuOptions.Music:
                     selected = ".music";
                     break;
-                case OptionsNPR.Topics:
+                case MenuOptions.Topics:
                     selected = ".topics";
                     break;
-                case OptionsNPR.ProgramsAndPodcasts:
+                case MenuOptions.ProgramsAndPodcasts:
                     selected = ".programs-podcasts";
                     break;
             }
@@ -89,11 +89,11 @@ namespace IntroToSeleniumInCSharp
             }
         }
 
-        public List<Data> getNewsAndConversationsNPR()
+        public List<Data> getNewsAndConversations()
         {
             List<Data> data = new List<Data>();
 
-            clickOption(OptionToClassName(OptionsNPR.ProgramsAndPodcasts));
+            clickOption(OptionToClassName(MenuOptions.ProgramsAndPodcasts));
             var result = findOption(".group").FindAllCss("li").ToList();
 
             foreach (SnapshotElementScope scope in result)
@@ -114,7 +114,7 @@ namespace IntroToSeleniumInCSharp
 
         public void clickByTextNC(string text)
         {
-            clickOption(OptionToClassName(OptionsNPR.ProgramsAndPodcasts));
+            clickOption(OptionToClassName(MenuOptions.ProgramsAndPodcasts));
             browser.FindLink(text).Click();
         }
 

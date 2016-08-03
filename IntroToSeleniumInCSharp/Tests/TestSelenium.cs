@@ -56,13 +56,13 @@ namespace IntroToSeleniumInCSharp
             NPRPage npr = new NPRPage(browser);
 
             // open a specific menu
-            var classOption = npr.OptionToClassName(NPRPage.OptionsNPR.ProgramsAndPodcasts);
+            var classOption = npr.OptionToClassName(NPRPage.MenuOptions.ProgramsAndPodcasts);
             npr.clickOption(classOption);
             npr.verifyMenuOpen();
             npr.resetPage();
 
             // get 'news & conversations' elements from 'programs & podcasts' menu 
-            var data = npr.getNewsAndConversationsNPR();
+            var data = npr.getNewsAndConversations();
             npr.outputNewsAndConversationsNPR(data);
             npr.resetPage();
 
