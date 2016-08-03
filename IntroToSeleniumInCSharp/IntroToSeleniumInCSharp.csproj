@@ -80,10 +80,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NPRPage.cs" />
-    <Compile Include="TestSelenium.cs" />
+    <Compile Include="Object Models\NPRPage.cs" />
+    <Compile Include="Tests\TestSelenium.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="XpanxionPage.cs" />
+    <Compile Include="Object Models\XpanxionPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
