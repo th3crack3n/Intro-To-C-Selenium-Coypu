@@ -66,14 +66,14 @@ namespace IntroToSeleniumInCSharp
 
             // open a specific menu
             var classOption = npr.OptionToClassName(NPRPage.OptionsNPR.ProgramsAndPodcasts);
-            npr.clickOption(classOption); // open menu
+            npr.clickOption(classOption);
             npr.verifyMenuOpen();
-            npr.clickOption(classOption); // close menu
+            npr.resetPage();
 
             // get 'news & conversations' elements from 'programs & podcasts' menu 
             var data = npr.getNewsAndConversationsNPR();
             npr.outputNewsAndConversationsNPR(data);
-            npr.clickOption(classOption); // close menu
+            npr.resetPage();
 
             // click specific 'news & conversations' element from 'programs & podcasts' menu
             var text = "All Things Considered";

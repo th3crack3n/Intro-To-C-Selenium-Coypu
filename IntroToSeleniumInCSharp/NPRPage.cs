@@ -29,6 +29,11 @@ namespace IntroToSeleniumInCSharp
             this.browser = browser;
             this.browser.Visit(home);
         }
+
+        public void resetPage()
+        {
+            browser.Visit(home);
+        }
         
         public string OptionToClassName(OptionsNPR option)
         {
