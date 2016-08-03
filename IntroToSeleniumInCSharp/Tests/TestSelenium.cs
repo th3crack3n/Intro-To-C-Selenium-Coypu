@@ -1,11 +1,5 @@
 ﻿using Coypu;
-using Coypu.NUnit.Matchers;
 using NUnit.Framework;
-using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 
 namespace IntroToSeleniumInCSharp
 {
@@ -28,7 +22,10 @@ namespace IntroToSeleniumInCSharp
         }
 
         /// <summary>
-        /// A test on the xpanxion.com website, specifically to check user input on the name and email fields of the contact page
+        /// A test on the xpanxion.com website
+        /// <remarks>
+        /// Checks user input on the name and email fields of the contact page
+        /// </remarks>
         /// </summary>
         [Test]
         public static void testXpanxionForm()
@@ -46,18 +43,12 @@ namespace IntroToSeleniumInCSharp
         }
 
         /// <summary>
-        /// Three tests on the npr.org website:
-        ///     <list type="bullet">
-        ///         <item>
-        ///             <description>Click "Programs & Podcasts" and verify menu opens</description>
-        ///         </item>
-        ///         <item>
-        ///             <description>Get a list of Objects that store each element and link in the "News & Conversations" column</description>
-        ///         </item>
-        ///         item>
-        ///             <description>Click the link in the "News & Conversations" column with the given text</description>
-        ///         </item>
-        ///     </list>
+        /// Three tests on the npr.org website
+        /// <remarks>
+        ///     Click "Programs & Podcasts" and verify menu opens
+        ///     Get a list of Objects that store each element and link in the "News & Conversations" column
+        ///     Click the link in the "News & Conversations" column with the given text
+        /// </remarks>
         /// </summary>
         [Test]
         public static void testNPRdata()
