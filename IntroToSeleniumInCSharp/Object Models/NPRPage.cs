@@ -35,22 +35,17 @@ namespace IntroToSeleniumInCSharp
         
         public string OptionToClassName(MenuOptions option)
         {
-            string selected = null;
-
             switch (option)
             {
                 case MenuOptions.Music:
-                    selected = ".music";
-                    break;
+                    return ".music";
                 case MenuOptions.Topics:
-                    selected = ".topics";
-                    break;
+                    return ".topics";
                 case MenuOptions.ProgramsAndPodcasts:
-                    selected = ".programs-podcasts";
-                    break;
+                    return ".programs-podcasts";
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-
-            return selected;
         }
 
         public void clickOption(string option)
@@ -71,8 +66,7 @@ namespace IntroToSeleniumInCSharp
         public class Data
         {
             IWebElement element;
-            public string href { get; set; }
-            public string text { get; set; }
+            public string href, text;
 
             public Data(IWebElement element)
             {
@@ -89,7 +83,7 @@ namespace IntroToSeleniumInCSharp
 
         public List<Data> getNewsAndConversations()
         {
-            List<Data> data = new List<Data>();
+            var data = new List<Data>();
 
             clickOption(OptionToClassName(MenuOptions.ProgramsAndPodcasts));
             var result = findOption(".group").FindAllCss("li").ToList();
